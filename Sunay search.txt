@@ -1,0 +1,78 @@
+#include <iostream>
+#include <string.h>
+#include <string>
+#include <sys/time.h>
+#define SIZE 256
+
+// MEHMET ERIM SUNDAY
+
+
+using namespace std;
+
+void badCharacterFunction( string str, int size, int badchar[]) 
+{ 
+	int i; 
+
+	for (i = 0; i < 256; i++) {   // first lenght of pattern + 1
+			badchar[i] = size+1;
+	}
+	
+	for (i = 0; i < size; i++){   // canculate
+		badchar[(int) str[i]] = max(1,(size-i-1));
+		
+	}
+} 
+
+
+void sundaySearch(string text, string pattern)
+{
+	int m = pattern.size(); 
+	int n = text.size(); 
+	
+	int badchar[SIZE]; 
+
+	badCharacterFunction(pattern, m, badchar); 
+	
+	
+
+    int i=0,len=0;
+    
+    
+	while(i<=(n-m)){
+
+		len = 0;
+	
+		for(int k=0;k<m;k++){
+			
+			if(text[i+k] == pattern[k]){   // if text and pattern it matches , increase len;
+				len++;
+			}else{                 // if not match, break loop;
+				break;
+			}
+		
+		}
+		
+		if(len == m){
+			printf("Pattern found at index %d \n", i);
+		}
+		
+
+	i+= badchar[(int)text[i+m]];
+	
+	}
+		
+}
+
+
+
+int main(int argc, char** argv) 
+{
+	
+	string pattern = "AAAAAB";
+	string text = "AAAA";
+
+	
+	sundaySearch(text,pattern);
+
+	return 0;
+}
